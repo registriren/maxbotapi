@@ -692,7 +692,6 @@ class BotHandler:
         """
         attachments = None
         if update:
-            print(update)
             type = self.get_update_type(update)
             if 'updates' in update.keys():
                 update = update['updates'][0]
@@ -1894,12 +1893,10 @@ class BotHandler:
             "notification": notification
         }
         flag = 'attachment.not.ready'
-        print(message)
         while flag == 'attachment.not.ready':
             try:
                 response = requests.post(self.url + method, params=params, data=json.dumps(data))
                 upd = response.json()
-                print(upd)
                 if 'code' in upd.keys():
                     flag = upd.get('code')
                     logger.info('ждем 5 сек...')
