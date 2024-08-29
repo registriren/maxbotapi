@@ -838,6 +838,49 @@ class BotHandler:
                 # == 'bot_removed' or type == 'user_added' or type == 'user_removed' or type == '':
         return chat_id
 
+    def get_link_type(self, update):
+        """
+        Получение типа пересланного сообщения
+        API = subscriptions/Get updates/[updates][0][message][link][type]
+        :param update = результат работы метода get_update
+        :return: возвращает, если это возможно, значение поля 'type' пересланного боту сообщения (reply|forward)
+        """
+        link_type = None
+        if update is not None:
+            if 'updates' in update.keys():
+                upd = update['updates'][0]
+            else:
+                upd = update
+            if 'message' in upd.keys():
+                upd = upd['message']
+                if 'link' in upd.keys():
+                    upd = upd['link']
+                    if 'type' in upd.keys():
+                        link_type = upd['type']
+        return link_type
+
+
+    def get_link_message(self, update):
+        """
+        Получение message_id и текста сопровождения пересланного сообщения
+        API = subscriptions/Get updates/[updates][0][message][link][message]
+        :param update = результат работы метода get_update
+        :return: возвращает, если это возможно, значение поля 'message' пересланного боту сообщения (mid, seq, text)
+        """
+        link_message = None
+        if update is not None:
+            if 'updates' in update.keys():
+                upd = update['updates'][0]
+            else:
+                upd = update
+            if 'message' in upd.keys():
+                upd = upd['message']
+                if 'link' in upd.keys():
+                    upd = upd['link']
+                    if 'message' in upd.keys():
+                        link_message = upd['message']
+        return link_message
+
     def get_link_chat_id(self, update):
         """
         Получение идентификатора чата пересланного сообщения
@@ -858,6 +901,8 @@ class BotHandler:
                     if 'chat_id' in upd.keys():
                         chat_id = upd['chat_id']
         return chat_id
+
+
 
     def get_user_id(self, update):
         """
