@@ -4,11 +4,12 @@
 
 Примеры реализации ботов с использованием библиотеки:   
 
-<https://github.com/registriren/filelink>
+<https://github.com/registriren/userinfobot>
 
-<https://github.com/registriren/translatebot>
+<https://max.ru/translatechatbot>
+<https://max.ru/userinfobot>
 
-Чат для обсуждения вопросов, связанных с работой библиотеки <https://tt.me/maxbotapi>
+Чат для обсуждения вопросов, связанных с работой библиотеки [maxbotapi chat](https://max.ru/join/283-Rhj1NENnxm7ESgg7mHhFLRKL3DbJSrJ1SW8GfHg)
 
 Принцип взаимодействия с библиотекой:
 - 
