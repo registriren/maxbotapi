@@ -7,6 +7,7 @@
 <https://github.com/registriren/userinfobot>
 
 <https://max.ru/translatechatbot>
+
 <https://max.ru/userinfobot>
 
 Чат для обсуждения вопросов, связанных с работой библиотеки [maxbotapi chat](https://max.ru/join/283-Rhj1NENnxm7ESgg7mHhFLRKL3DbJSrJ1SW8GfHg)
