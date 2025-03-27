@@ -1,14 +1,14 @@
-# botapitamtam   
+# maxbotapi   
 
-Попытка создать набор простых инструментов для написания ботов на базе API мессенджера TamTam. Набор содержит базовый функционал взаимодействия бота с пользователями и предназначен для начинающих программистов. Синтаксис методов позволяет легко их модифицировать или создавать на их базе новые методы используя официальную документацию https://dev.tamtam.chat/ .
+Попытка создать набор простых инструментов для написания ботов на базе API мессенджера MAX. Набор содержит базовый функционал взаимодействия бота с пользователями и предназначен для начинающих программистов. Синтаксис методов позволяет легко их модифицировать или создавать на их базе новые методы используя официальную документацию https://dev.max.ru/ .
 
-Примеры реализации ботов с использованем библиотеки:   
+Примеры реализации ботов с использованием библиотеки:   
 
 <https://github.com/registriren/filelink>
 
 <https://github.com/registriren/translatebot>
 
-Чат для обсуждения вопросов, связанных с работой библиотеки <https://tt.me/botapitamtam>
+Чат для обсуждения вопросов, связанных с работой библиотеки <https://tt.me/maxbotapi>
 
 Принцип взаимодействия с библиотекой:
 - 
@@ -18,29 +18,32 @@
 4. В основном цикле Вашей программы осуществляем запрос происходящих с ботом событий методом `get_updates`. Результат помещаем в переменную, например `upd = get_updates()`.
 5. Результат работы сформированных вами событий так же можно поместить в переменную, например `res = send_message(text, chat_id)`. Чаще всего из результата сформированного события требуется получить параметр `message_id` с помощью которого в дальнейшем можно изменять (удалять) данное событие (сообщение, контент).  
 6. Для получения "тела" события, которое необходимо обработать, передаем переменную `upd` выбранному методу `get_` , например `get_text(upd)`, работаем с результатом. Если запрошенное событие не произошло в ответ получим `None`.  
-7. Предлагаемая конструкция кода:  
-```python
-from botapitamtam import BotHandler
+7. Предлагаемая конструкция кода:
 
-bot = BotHandler('access_token_primebot')
+```python
+from maxbotapi import BotHandler
+
+bot = BotHandler('access_token_masterbot')
+
 
 def main():
-    while True:
-        upd = bot.get_updates()  # получаем внутреннее представление сообщения (контента) отправленного боту (сформированного ботом)
-        # тут можно вставить любые действия которые должны выполняться во время ожидания события
-        if upd: # основной код, для примера представлен эхо-бот
-            chat_id = bot.get_chat_id(upd)
-            text = bot.get_text(upd)
-            bot.send_message(text, chat_id)
+  while True:
+    upd = bot.get_updates()  # получаем внутреннее представление сообщения (контента) отправленного боту (сформированного ботом)
+    # тут можно вставить любые действия которые должны выполняться во время ожидания события
+    if upd:  # основной код, для примера представлен эхо-бот
+      chat_id = bot.get_chat_id(upd)
+      text = bot.get_text(upd)
+      bot.send_message(text, chat_id)
+
 
 if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-        exit()
+  try:
+    main()
+  except KeyboardInterrupt:
+    exit()
 ```
-8. Для работы с библиотекой поместите файл [botapitamtam.py](botapitamtam.py) в каталог с вашим кодом. Для удобного использования библиотеки во многих ботах с возможностью получения обновлений необходимо клонировать репозиторий в отдельный каталог
-(`git clone https://github.com/registriren/botapitamtam`), а символьную ссылку на файл [botapitamtam.py](botapitamtam.py) разместить в каталогах с вашими ботами.
+8. Для работы с библиотекой поместите файл [maxbotapi.py](maxbotapi.py) в каталог с вашим кодом. Для удобного использования библиотеки во многих ботах с возможностью получения обновлений необходимо клонировать репозиторий в отдельный каталог
+(`git clone https://github.com/registriren/maxbotapi`), а символьную ссылку на файл [maxbotapi.py](maxbotapi.py) разместить в каталогах с вашими ботами.
 9. Отправка простого однотипного контента (текст и фото, текст и видео, текст и кнопки) в чат осуществляется с помощью методов `send_image, send_video, send_buttons`.
 10. Формирование кнопок осуществляется в несколько этапов:
   - Готовим кнопки в зависимости от типа (`callback, link, request_contact, request_geo_location, chat`) с помощью соответствующих методов `button_callback, button_link, button_contact и т.п.` результат работы методов присваем переменной, например `key1 = button_callback('Кнопка1', 'payload-key1')`
@@ -144,7 +147,7 @@ if __name__ == '__main__':
 
 ## Подробное описание методов  
 ### get_updates(marker=None, limit=100, timeout=30): 
-https://dev.tamtam.chat/#operation/getUpdates  
+https://dev.max.ru/#operation/getUpdates  
 Основная функция опроса состояния (событий) бота методом long polling  
 This method is used to get updates from bot via get request. It is based on long polling.  
 **:param marker:** условный (очередной) номер события, которое необходимо получить, если параметр пуст, то получаем текущее событие.  
@@ -154,14 +157,14 @@ This method is used to get updates from bot via get request. It is based on long
   
   
 ### get_subscriptions():  
-https://dev.tamtam.chat/#operation/getSubscriptions  
+https://dev.max.ru/#operation/getSubscriptions  
 Если ваш бот получает данные через WebHook, метод возвращает список всех подписок.  
 In case your bot gets data via WebHook, the method returns list of all subscriptions  
 **:return:** возвращает список подписок.
 
 
 ### subscribe(url, update_types, version):  
-https://dev.tamtam.chat/#operation/subscribe  
+https://dev.max.ru/#operation/subscribe  
 Подписывает бот для получения обновлений через WebHook. После вызова этого метода бот будет получать
 уведомления о новых событиях в чатах по указанному URL.  
 Subscribes bot to receive updates via WebHook. After calling this method, the bot will receive notifications
@@ -173,7 +176,7 @@ about new events in chat rooms at the specified URL.
 
 
 ### unsubscribe(url):    
-https://dev.tamtam.chat/#operation/unsubscribe  
+https://dev.max.ru/#operation/unsubscribe  
 Отменяет подписку бота на получение обновлений через WebHook. После вызова метода бот перестает получать
 уведомления о новых событиях. Уведомление через API длинного опроса становится доступным для бота  
 Unsubscribes bot from receiving updates via WebHook. After calling the method, the bot stops receiving
@@ -189,7 +192,7 @@ notifications about new events. Notification via the long-poll API becomes avail
 
        
 ### get_bot_info():
-https://dev.tamtam.chat/#operation/getMyInfo  
+https://dev.max.ru/#operation/getMyInfo  
 Возвращает информацию о текущем боте. Текущий бот может быть идентифицирован по токену доступа.  
 Метод возвращает идентификатор бота, имя и аватар (если есть).  
 Returns info about current bot. Current bot can be identified by access token.  
@@ -225,7 +228,7 @@ Returns the list of commands of the current bot.
 Returns a description of the current bot.  
        
 ### edit_bot_info(name, username, description=None, commands=None, photo=None, photo_url=None):
-https://dev.tamtam.chat/#operation/editMyInfo  
+https://dev.max.ru/#operation/editMyInfo  
 Редактирует текущую информацию о боте. Заполните только те поля, которые вы хотите обновить. Все остальные поля останутся нетронутыми.  
 Edits current bot info. Fill only the fields you want to update. All remaining fields will stay untouched  
 **:param name:** имя бота  
@@ -244,20 +247,20 @@ Edits current bot info. Fill only the fields you want to update. All remaining f
 
 
 ### get_chat(chat_id):
-https://dev.tamtam.chat/#operation/getChat  
+https://dev.max.ru/#operation/getChat  
 Метод получения информации о чате (какой информации?).    
 Returns info about chat.  
 **:param chat_id:** идентификатор чата о котором получаем информацию  
 **:return:** возвращает информацию о чате в формате JSON или None при неудаче  
 
 ### get_chat_type(update):
-https://dev.tamtam.chat/#operation/getUpdates  
+https://dev.max.ru/#operation/getUpdates  
 Получает тип чата, канала, или диалога (Enum:"dialog" "chat" "channel")  
 **:param update:** результат работы метода get_updates  
 **:return:** возвращает значение поля chat_type.  
         
 ### get_all_chats(count=50, marker=None):
-https://dev.tamtam.chat/#operation/getChats  
+https://dev.max.ru/#operation/getChats  
 Возвращает информацию о чатах, в которых участвовал бот: список результатов и маркер указывают на следующую страницу    
 Returns information about chats that bot participated in: a result list and marker points to the next page  
 **:param count:** количествово анализируемых чатов (максмум 100)  
@@ -265,21 +268,21 @@ Returns information about chats that bot participated in: a result list and mark
 **:return chats:** возвращает результат GET запроса  
         
 ### get_chat_admins(chat_id):
-https://dev.tamtam.chat/#operation/getAdmins  
+https://dev.max.ru/#operation/getAdmins  
 Возвращает сведения об администраторах чата и их правах.  
 Returns users participated in chat.  
 **:param chat_id:** идентификатор чата  
 **:return chat_admins:** возвращает список администраторов чата  
         
 ### get_chat_membership(chat_id):
-https://dev.tamtam.chat/#operation/getMembership        
+https://dev.max.ru/#operation/getMembership        
 Возвращает информацию о членстве в чате для текущего бота  
 Returns chat membership info for current bot  
 **:param chat_id:** идентификатор чата
 **:return chat_membership:** возвращает информацию о членстве бота в чате
         
 ### leave_chat(chat_id):
-https://dev.tamtam.chat/#operation/leaveChat  
+https://dev.max.ru/#operation/leaveChat  
 Удаление бота из участников чата.  
 Removes bot from chat members.  
 **:param chat_id:** идентификатор изменяемого чата
@@ -287,7 +290,7 @@ Removes bot from chat members.
 
 
 ### edit_chat_info(chat_id, icon=None, icon_url=None, title=None, pin=None, notify=True):
-https://dev.tamtam.chat/#operation/editChat  
+https://dev.max.ru/#operation/editChat  
 Редактирование информации чата: заголовок и значок  
 Edits chat info: title, icon, pin  
 **:param chat_id:** идентификатор изменяемого чата    
@@ -299,7 +302,7 @@ Edits chat info: title, icon, pin
 **:return:** возвращает информацию о параметрах измененного чата  
        
 ### get_members(chat_id, user_ids, marker=None, count=20):
-https://dev.tamtam.chat/#operation/getMembers  
+https://dev.max.ru/#operation/getMembers  
 Возвращает пользователей, участвовавших в чате.  
 Returns users participated in chat.  
 **:param chat_id:** идентификатор чата  
@@ -309,7 +312,7 @@ Returns users participated in chat.
 **:return:** возвращает информацию о пользователях чата (канала)  
      
 ### add_members(chat_id, user_ids):
-https://dev.tamtam.chat/#operation/addMembers  
+https://dev.max.ru/#operation/addMembers  
 Добавляет пользователя в чат. Могут потребоваться дополнительные разрешения.  
 Adds members to chat. Additional permissions may require.  
 **:param chat_id:** идентификатор чата  
@@ -317,7 +320,7 @@ Adds members to chat. Additional permissions may require.
 **:return add_members:** возвращает результат POST запроса  
 
 ### remove_member(chat_id, user_id):
-https://dev.tamtam.chat/#operation/removeMember  
+https://dev.max.ru/#operation/removeMember  
 Удаляет участника из чата. Могут потребоваться дополнительные разрешения.  
 Removes member from chat. Additional permissions may require.  
 **:param chat_id:** идентификатор чата  
@@ -325,103 +328,103 @@ Removes member from chat. Additional permissions may require.
 **:return remove_member:** возвращает результат DELETE запроса  
        
 ### get_update_type(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Метод получения типа события произошедшего с ботом  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает значение поля 'update_type' (bot_started, message_created, user_added) при неудаче = None    
       
 ### get_text(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получение текста отправленного или пересланного боту  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает, если это возможно, значение поля 'text' созданного или пересланного сообщения из 'body' или 'link'-'forward' соответственно, при неудаче 'text' = None    
 
 ### get_attachments(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получение всех вложений (file, contact, share и т.п.) к сообщению отправленному или пересланному боту  
 **:param update:** результат работы метода get_updates  
 **:return attachments:** возвращает, если это возможно, значение поля 'attachments' созданного или пересланного контента, при неудаче 'attachments' = None 
                
 ### get_url(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получение ссылки отправленного или пересланного боту файла  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает, если это возможно, значение поля 'url' созданного или пересланного файла из 'body' или 'link' соответственно, при неудаче 'url' = None    
 
 ### get_chat_id(update=None):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получения идентификатора чата, в котором произошло событие  
 **:param update:** результат работы метода get_update, если update=None, то chat_id получается из последнего активного диалога  
 **:return:** возвращает, если это возможно, значение поля 'chat_id' не зависимо от события, произошедшего с ботом если событие - "удаление сообщения", то chat_id = None  
 
 ### get_link_chat_id(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получение идентификатора чата пересланного сообщения  
 **:param update:** результат работы метода get_update    
 **:return:** возвращает, если это возможно, значение поля 'chat_id' пересланного боту сообщения (от кого)  
 
 ### get_user_id(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получения идентификатора пользователя, инициировавшего событие  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает, если это возможно, значение поля 'user_id' не зависимо от события, произошедшего с ботом если событие - "удаление сообщения", то user_id = None  
 
 ### get_link_user_id(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получения идентификатора пользователя пересланного сообщения  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает, если это возможно, значение поля 'user_id' пересланного боту сообщения (от кого)  
 
 ### get_name(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получение имени пользователя, инициировавшего событие  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает, если это возможно, значение поля 'name' не зависимо от события, произошедшего с ботом если событие - "удаление сообщения", то name = None  
 
 ### get_username(update):
-https://botapi.tamtam.chat/updates    
+https://botapi.max.ru/updates    
 Получение username пользователя (если оно есть), инициировавшего событие, в том числе нажатие кнопки    
 **:param update:** результат работы метода get_update  
 **:return:** возвращает, если это возможно, значение поля 'username'
 
 ### get_is_bot(update):  
-https://botapi.tamtam.chat/updates      
+https://botapi.max.ru/updates      
 Проверка на принадлежность к боту участника, инициировавшего событие, в том числе нажатие кнопки    
 **:param update:** результат работы метода get_update   
 **:return:** возвращает, если это возможно, значение поля 'is_bot' (True, False) или None при неудаче    
 
 ### get_link_name(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получение имени пользователя пересланного сообщения  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает, если это возможно, значение поля 'name' пересланного боту сообщения (от кого)  
 
 ### get_link_username(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получение username пользователя пересланного сообщения  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает, если это возможно, значение поля 'username' пересланного боту сообщения (от кого)  
 
 ### get_payload(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Метод получения значения нажатой кнопки, заданного в send_buttons  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает результат нажатия кнопки или None  
 
 ### get_callback_id(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Метод получения значения callback_id при нажатии кнопки  
 **:param update:** результат работы метода get_update  
 **:return:** возвращает callback_id нажатой кнопки или None  
 
 ### get_message_id(update):
-https://botapi.tamtam.chat/updates  
+https://botapi.max.ru/updates  
 Получение message_id отправленного или пересланного боту  
 **:param update:**результат работы метода get_update  
 **:return:** возвращает, если это возможно, значение поля 'mid'
 
 ### get_messages(chat_id, message_ids='', time_from=None, time_to=None, count=50):  
-https://dev.tamtam.chat/#operation/getMessages  
+https://dev.max.ru/#operation/getMessages  
 Возвращает сообщения в чате: страницу результатов и маркер, ссылающийся на следующую страницу. Сообщения передаются в обратном направлении, поэтому последнее сообщение в чате будет первым в результирующем массиве. Поэтому, если вы используете параметры time_from и time_to, то time_to должно быть меньше, чем time_from  
 **:param chat_id:** идентификатор чата  
 **:param message_ids:** разделенный запятыми список идентификаторов сообщений  
@@ -431,7 +434,7 @@ https://dev.tamtam.chat/#operation/getMessages
 **:return:** возвращает список сообщений  
 
 ### edit_message(message_id, text, attachments=None, link=None, notify=True):  
-https://dev.tamtam.chat/#operation/editMessage  
+https://dev.max.ru/#operation/editMessage  
 Метод  изменения (обновления) любого контента по его идентификатору  
 **:param message_id:** Идентификатор редактируемого контента  
 **:param attachments:** Новый массив объектов (файл, фото, видео, аудио, кнопки)  
@@ -442,7 +445,7 @@ https://dev.tamtam.chat/#operation/editMessage
 **:return update:** Возвращает результат PUT запроса  
 
 ### pin_message(chat_id, message_id, notify=True):  
-https://dev.tamtam.chat/#operation/pinMessage  
+https://dev.max.ru/#operation/pinMessage  
 Метод закрепления сообщений в чате  
 **:param chat_id:** Идентификатор чата  
 **:param message_id:** Идентификатор сообщения, которое будет закреплено  
@@ -450,54 +453,54 @@ https://dev.tamtam.chat/#operation/pinMessage
 **:return update:** Возвращает результат PUT запроса    
 
 ### unpin_message(chat_id):  
-https://dev.tamtam.chat/#operation/unpinMessage  
+https://dev.max.ru/#operation/unpinMessage  
 Метод открепления сообщения в чате  
 **:param chat_id:** Идентификатор чата  
 
 ### get_pinned_message(chat_id):  
-https://dev.tamtam.chat/#operation/getPinnedMessage  
+https://dev.max.ru/#operation/getPinnedMessage  
 Метод получения закрепленного собщения в чате  
 **:param chat_id:** Идентификатор чата  
 **:return message:** Возвращает закрепленное сообщение, с ним можно работать привычными методами, например get_text(message)  
 
 ### typing_on(chat_id):
-https://dev.tamtam.chat/#operation/sendAction  
+https://dev.max.ru/#operation/sendAction  
 Отправка уведомления от бота в чат - 'печатает...'  
 **:param chat_id:** чат куда необходимо отправить уведомление  
 **:return:**
 
 ### mark_seen(chat_id):
-https://dev.tamtam.chat/#operation/sendAction  
+https://dev.max.ru/#operation/sendAction  
 Отправка в чат маркера о прочтении ботом сообщения  
 **:param chat_id:** чат куда необходимо отправить уведомление  
 **:return:**
 
 ### sending_video(chat_id):
-https://dev.tamtam.chat/#operation/sendAction   
+https://dev.max.ru/#operation/sendAction   
 Отправка уведомления от бота в чат - 'отправка видео...'  
 **:param chat_id:** чат куда необходимо отправить уведомление  
 **:return:**
 
 ### sending_audio(chat_id):
-https://dev.tamtam.chat/#operation/sendAction  
+https://dev.max.ru/#operation/sendAction  
 Отправка уведомления от бота в чат - 'отправка аудио...'  
 **:param chat_id:** чат куда необходимо отправить уведомление  
 **:return:**
 
 ### sending_photo(chat_id):
-https://dev.tamtam.chat/#operation/sendAction  
+https://dev.max.ru/#operation/sendAction  
 Отправка уведомления от бота в чат - 'отправка фото ...'  
 **:param chat_id:** чат куда необходимо отправить уведомление  
 **:return:**
 
 ### sending_image(chat_id):
-https://dev.tamtam.chat/#operation/sendAction  
+https://dev.max.ru/#operation/sendAction  
 Отправка уведомления от бота в чат - 'отправка фото ...'  
 **:param chat_id:** чат куда необходимо отправить уведомление  
 **:return:**
 
 ### sending_file(chat_id):
-https://dev.tamtam.chat/#operation/sendAction  
+https://dev.max.ru/#operation/sendAction  
 Отправка уведомления от бота в чат - 'отправка файла...'    
 **:param chat_id:** чат куда необходимо отправить уведомление      
 **:return:**
@@ -555,20 +558,20 @@ Send buttons to specific chat_id by post request
 **:return update:** результат POST запроса на отправку кнопок  
 
 ### upload_url(type):
-https://dev.tamtam.chat/#operation/getUploadUrl  
+https://dev.max.ru/#operation/getUploadUrl  
 Вспомогательная функция получения URL для загрузки контента в ТамТам  
 **:param type:** тип контента ('audio', 'video', 'file', 'photo')  
 **:return:** URL на который будет отправляться контент  
 
 ### attach_file(content, content_name=None):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод подготовки файла (файлы загружаются только по одному) совместно с кнопками  
 **:param content:** имя файла или полный путь доступный боту на машине где он запущен, например '/mnt/files/movie.mp4'  
 **:param content_name:** имя с которым будет загружен файл  
 **:return attach:** подготовленный контент  
 
 ### send_file(content, chat_id, text=None, content_name=None, format=None):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод отправки файла в указанный чат (файлы загружаются только по одному)  
 **:param content:** имя файла или полный путь доступный боту на машине где он запущен, например 'movie.mp4'  
 **:param chat_id:** чат куда будет загружен файл  
@@ -578,13 +581,13 @@ https://dev.tamtam.chat/#operation/sendMessage
 **:return update:** результат работы POST запроса отправки файла  
 
 ### attach_image(content):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод подготовки изображений (нескольких изображений) в указанный чат  
 **:param content:** имя файла или список имен файлов с изображениями  
 **:return attach:** подготовленный контент  
 
 ### send_image(content, chat_id, text=None, format=None):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод отправки фoто (нескольких фото) в указанный чат  
 **:param content:** имя файла или список имен файлов с изображениями  
 **:param chat_id:** чат куда будут загружены изображения  
@@ -593,13 +596,13 @@ https://dev.tamtam.chat/#operation/sendMessage
 **:return update:** результат работы POST запроса отправки файла  
 
 ### attach_image_url(url):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод подготовки изображений (нескольких изображений) к отправке по их url  
 **:param url:** http адрес или список адресов с изображениями  
 **:return attach:** подготовленный контент  
 
 ### send_image_url(url, chat_id, text=None, format=None):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод отправки фото (нескольких фото) в указанный чат по url  
 **:param url:** http адрес или список адресов с изображениями  
 **:param chat_id:** чат куда будут загружены изображения  
@@ -608,14 +611,14 @@ https://dev.tamtam.chat/#operation/sendMessage
 **:return update:** результат работы POST запроса отправки фото  
 
 ### attach_video(content):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод подготовки к отправке видео (нескольких видео)  
 **:param content:** имя файла или полный путь доступный боту на машине где он запущен, например 'movie.mp4'
 или список файлов ['movie.mp4', 'movie2.mkv']  
 **:return attach:** подготовленный контент  
 
 ### send_video(content, chat_id, text=None, format=None):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод отправки видео (нескольких видео) в указанный чат  
 **:param content:** имя файла или полный путь доступный боту на машине где он запущен, например 'movie.mp4' или список файлов ['movie.mp4', 'movie2.mkv']
 **:param chat_id:** чат куда будут загружены видео  
@@ -624,14 +627,14 @@ https://dev.tamtam.chat/#operation/sendMessage
 **:return update:** результат работы POST запроса отправки видео  
 
 ### attach_audio(content):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод подготовки аудио (только по одному) к отправке  
 **:param content:** имя файла или полный путь доступный боту на машине где он запущен (например 'audio.mp3'),
 файлы защищенные авторскими правами не загружаются  
 **:return attach:** подготовленный контент  
 
 ### send_audio(content, chat_id, text=None, format=None):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод отправки аудио (только по одному) в указанный чат  
 **:param content:** имя файла или полный путь доступный боту на машине где он запущен (например 'audio.mp3'),
 файлы защищенные авторскими правами не загружаются  
@@ -641,7 +644,7 @@ https://dev.tamtam.chat/#operation/sendMessage
 **:return update:** результат работы POST запроса отправки аудио  
 
 ### send_forward_message(text, mid, chat_id, format=None):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Send forward message specific chat_id by post request  
 Пересылает сообщение в указанный чат  
 **:param text:** текст к пересылаемому сообщению или None  
@@ -651,19 +654,19 @@ Send forward message specific chat_id by post request
 **:return update:** response | ответ на POST message в соответствии с API  
 
 ### link_reply(mid):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Формирует параметр link на цитируемуе сообщение для отправки через send_message  
 **:param mid:** идентификатор сообщения (get_message_id) на которое готовим link  
 **:return link:** сформированный параметр link  
 
 ### link_forward(mid):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Формирует параметр link на пересылаемое сообщение для отправки через send_message  
 **:param mid:** идентификатор сообщения (get_message_id) на которое готовим link  
 **:return link:** сформированный параметр link  
 
 ### send_reply_message(text, mid, chat_id, format=None):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Send reply message specific chat_id by post request  
 Формирует ответ на сообщение в указанный чат  
 **:param text:** текст ответа на сообщение (обязательный параметр)  
@@ -673,7 +676,7 @@ Send reply message specific chat_id by post request
 **:return update:** response | ответ на POST запрос в соответствии с API  
 
 ### token_upload_content(type, content, content_name=None):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Вспомогательная функция получения токена для загрузки контента в ТамТам  
 **:param type:** тип контента ('audio', 'video', 'file', 'photo')  
 **:param content:** имя файла или полный путь доступный боту на машине где он запущен (например 'movie.mp4')  
@@ -681,7 +684,7 @@ https://dev.tamtam.chat/#operation/sendMessage
 **:return update:** результат работы POST запроса отправки файла  
 
 ### send_message(text, chat_id, user_id=None, attachments=None, link=None, notify=True, dislinkprev=False):
-https://dev.tamtam.chat/#operation/sendMessage  
+https://dev.max.ru/#operation/sendMessage  
 Метод отправки любого контента, сформированного в соответсвии с документацией, в указанный чат  
 **:param attachments:** Массив объектов (файл, фото, видео, аудио, кнопки и т.д.)  
 **:param chat_id:** Чат куда отправляется контент  
@@ -695,7 +698,7 @@ https://dev.tamtam.chat/#operation/sendMessage
 
 
 ### send_answer_callback(callback_id, notification, text=None, attachments=None, link=None, notify=None):
-https://dev.tamtam.chat/#operation/answerOnCallback  
+https://dev.max.ru/#operation/answerOnCallback  
 Метод отправки ответа после того, как пользователь нажал кнопку. Ответом может быть обновленное сообщение или/и кратковременное всплывающее уведомление пользователя.    
 **:param callback_id:** параметр, соответствующий нажатой кнопке  
 **:param notification:** кратковременное, всплывающее уведомление  
@@ -707,26 +710,26 @@ https://dev.tamtam.chat/#operation/answerOnCallback
 **:return update:** результат POST запроса  
 
 ### get_attach_type(update):
-https://dev.tamtam.chat/#operation/getUpdates  
+https://dev.max.ru/#operation/getUpdates  
 Получение типа вложения (file, contact, share и т.п.) к сообщению отправленному или пересланному боту  
 **:param update:** результат работы метода get_updates  
 **:return att_type:** возвращает, если это возможно, значение поля 'type' созданного или пересланного контента из 'body' или 'link' соответственно, при неудаче 'type' = None  
 
 ### get_session_id(update):
-https://dev.tamtam.chat/#operation/getUpdates  
+https://dev.max.ru/#operation/getUpdates  
 Метод получения значения session_id в режиме конструктора.  
 **:param update:** результат работы метода get_updates  
 **:return:** возвращает session_id для дальнейшей работы с данным сеансом конструктора    
 
 ### get_construct_text(update):
-https://dev.tamtam.chat/#operation/getUpdates  
+https://dev.max.ru/#operation/getUpdates  
 (Метод устарел, необходимо использовать [get_text()](#get_textupdate))  
 Получение текста набранного пользователем в режиме конструктора.  
 **:param update:** результат работы метода get_updates  
 **:return:** возвращает, если это возможно, значение поля 'text', сообщения набранного пользователем в режиме конструктора  
         
 ### get_construct_payload(update):  
-https://dev.tamtam.chat/#operation/getUpdates  
+https://dev.max.ru/#operation/getUpdates  
 (Метод устарел, необходимо использовать [get_payload()](#get_payloadupdate))  
 Получение значения кнопки нажатой пользователем в режиме конструктора  
 **:param update:** результат работы метода get_updates  
@@ -734,26 +737,26 @@ https://dev.tamtam.chat/#operation/getUpdates
 
 ### get_construct_attach(update):  
 (Метод устарел, необходимо использовать [get_attachments()](#get_attachmentsupdate))  
-https://dev.tamtam.chat/#operation/getUpdates  
+https://dev.max.ru/#operation/getUpdates  
 Получение дополнительного контента (фото, видео и т.п.) к сообщению набранному пользователем в режиме конструктора  
 **:param update:** результат работы метода get_updates  
 **:return:** возвращает, если это возможно, значение поля 'attachments', сообщения набранного пользователем в режиме конструктора  
 
 ### get_construct_attach_type(update):  
 (Метод устарел, необходимо использовать [get_attach_type()](#get_attach_typeupdate))  
-https://dev.tamtam.chat/#operation/getUpdates  
+https://dev.max.ru/#operation/getUpdates  
 Получение типа вложения (file, contact, share и т.п.) к сообщению формируемому в боте-конструкторе  
 **:param update:** результат работы метода get_updates  
 **:return:** возвращает, если это возможно, значение поля 'type' первого контента переданного боту в режиме коструктора  
 
 ### get_start_payload(update):  
-https://dev.tamtam.chat/#operation/getUpdates  
+https://dev.max.ru/#operation/getUpdates  
 Получение начальной полезной нагрузки при открытии чата, созданого ботом в режиме конструтора. С помощью данного метода можно передать данные боту, которые он сможет получить после активации чата (тип message_chat_created), созданного в режиме конструктора  
 **:param update:** результат работы метода get_updates()  
 **:return:** возвращает, если это возможно, значение поля 'start_payload'  
 
 ### send_construct_message(session_id, hint, text=None, attachments=None, markup=None, format=None, allow_user_input=True, data=None, buttons=None, placeholder=None):
-https://dev.tamtam.chat/#operation/construct  
+https://dev.max.ru/#operation/construct  
 Метод отправки результата работы конструктора в чат.  
 **:param session_id:** параметр, соответствующий вызванному конструктору  
 **:param hint:** сообщение пользователю, вызвавшему конструктор  
@@ -768,7 +771,7 @@ https://dev.tamtam.chat/#operation/construct
 **:return:** результат POST запроса   
 
 ### markup(type, from_posit, length):
-https://dev.tamtam.chat/#operation/construct
+https://dev.max.ru/#operation/construct
 Подготавливает формат для модификации фрагмента текста
 **:param type:** тип формата
 **:param from_posit:** позиция в тексте откуда нужно начать форматирование

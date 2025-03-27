@@ -1,4 +1,4 @@
-# Version 0.5.2.3
+# Version 0.1
 
 import json
 import logging
@@ -18,14 +18,14 @@ class BotHandler:
 
     def __init__(self, token):
         self.token = token
-        self.url = 'https://botapi.tamtam.chat/'
+        self.url = 'https://botapi.max.ru/'
         self.marker = None
 
     def get_updates(self, limit=1, timeout=45):
         """
         Основная функция опроса состояния (событий) бота методом long polling
         This method is used to get updates from bot via get request. It is based on long polling.
-        https://dev.tamtam.chat/#operation/getUpdates
+        https://dev.max.ru/#operation/getUpdates
         API = subscriptions/Get updates/
         """
         update = {}
@@ -64,7 +64,7 @@ class BotHandler:
         """
         Если ваш бот получает данные через WebHook, метод возвращает список всех подписок.
         In case your bot gets data via WebHook, the method returns list of all subscriptions
-        https://dev.tamtam.chat/#operation/getSubscriptions
+        https://dev.max.ru/#operation/getSubscriptions
         API = subscriptions
         :return: возвращает список подписок.
         """
@@ -90,7 +90,7 @@ class BotHandler:
         уведомления о новых событиях в чатах по указанному URL.
         Subscribes bot to receive updates via WebHook. After calling this method, the bot will receive notifications
         about new events in chat rooms at the specified URL.
-        https://dev.tamtam.chat/#operation/subscribe
+        https://dev.max.ru/#operation/subscribe
         API = subscriptions
         :param url: URL HTTP(S) - точки входа вашего бота, должен начинаться с http(s)://
         :param update_types: список типов обновлений, которые хочет получить ваш бот [в разработке..]
@@ -124,7 +124,7 @@ class BotHandler:
         уведомления о новых событиях. Уведомление через API длинного опроса становится доступным для бота
         Unsubscribes bot from receiving updates via WebHook. After calling the method, the bot stops receiving
         notifications about new events. Notification via the long-poll API becomes available for the bot
-        https://dev.tamtam.chat/#operation/unsubscribe
+        https://dev.max.ru/#operation/unsubscribe
         API = subscriptions
         :param url: URL для удаления из подписок WebHook
         :return: возвращает результат DELETE запроса
@@ -164,7 +164,7 @@ class BotHandler:
         возвращает идентификатор бота, имя и аватар (если есть).
         Returns info about current bot. Current bot can be identified by access token.
         Method returns bot identifier, name and avatar (if any).
-        https://dev.tamtam.chat/#operation/getMyInfo
+        https://dev.max.ru/#operation/getMyInfo
         API = me
         :return: bot_info: возвращает информацию о боте.
         """
@@ -267,7 +267,7 @@ class BotHandler:
         поля останутся нетронутыми.
         Edits current bot info. Fill only the fields you want to update. All remaining
         fields will stay untouched
-        https://dev.tamtam.chat/#operation/editMyInfo
+        https://dev.max.ru/#operation/editMyInfo
         API = me
         :param name: имя бота
         :param username: уникальное имя (@my_bot) бота без знака "@"
@@ -307,7 +307,7 @@ class BotHandler:
 
     def get_chat(self, chat_id):
         """
-        https://dev.tamtam.chat/#operation/getChat
+        https://dev.max.ru/#operation/getChat
         Метод получения информации о чате (какой информации?).
         Returns info about chat.
         API = chats/{chatId}
@@ -332,7 +332,7 @@ class BotHandler:
 
     def get_chat_type(self, update):
         """
-        https://dev.tamtam.chat/#operation/getUpdates
+        https://dev.max.ru/#operation/getUpdates
         API = subscriptions/Get updates/[updates][0][message][recipient][chat_type]
         Получает тип чата, канала, или диалога (Enum:"dialog" "chat" "channel")
         :param update: результат работы метода get_updates
@@ -357,7 +357,7 @@ class BotHandler:
         """
         Возвращает информацию о чатах, в которых участвовал бот: список результатов и маркер указывают на следующую страницу
         Returns information about chats that bot participated in: a result list and marker points to the next page
-        https://dev.tamtam.chat/#operation/getChats
+        https://dev.max.ru/#operation/getChats
         API = chats
         :param count: количествово анализируемых чатов (максмум 100).
         :param marker: указывает на следующую страницу данных, null для первой страницы
@@ -385,7 +385,7 @@ class BotHandler:
         """
         Возвращает всех администраторов чата. Бот должен быть администратором в запрошенной чате.
         Returns all chat administrators. Bot must be administrator in requested chat.
-        https://dev.tamtam.chat/#operation/getAdmins
+        https://dev.max.ru/#operation/getAdmins
         API = chats/{chatId}/members
         :param chat_id: идентификатор чата
         :return chat_admins: возвращает список администраторов чата
@@ -410,7 +410,7 @@ class BotHandler:
         """
         Возвращает информацию о членстве в чате для текущего бота
         Returns chat membership info for current bot.
-        https://dev.tamtam.chat/#operation/getMembership
+        https://dev.max.ru/#operation/getMembership
         API = chats/{chatId}/members/me
         :param chat_id: идентификатор чата
         :return chat_membership: возвращает информацию о членстве бота в чате
@@ -435,7 +435,7 @@ class BotHandler:
         """
         Удаление бота из участников чата.
         Removes bot from chat members.
-        https://dev.tamtam.chat/#operation/leaveChat
+        https://dev.max.ru/#operation/leaveChat
         API = chats/{chatId}/members/me
         :param chat_id: идентификатор изменяемого чата
         :return: возвращает результат DELETE запроса
@@ -458,7 +458,7 @@ class BotHandler:
 
     def edit_chat_info(self, chat_id, icon=None, icon_url=None, title=None, pin=None, notify=True):
         """
-        https://dev.tamtam.chat/#operation/editChat
+        https://dev.max.ru/#operation/editChat
         Редактирование информации чата: заголовок и значок, закреп сообщения, бот должен иметь соответствующие разрешения
         Edits chat info: title, icon, pin
         API = chats/{chatId}
@@ -503,7 +503,7 @@ class BotHandler:
         Возвращает сообщения в чате: страницу результатов и маркер, ссылающийся на следующую страницу.
         Сообщения передаются в обратном направлении, поэтому последнее сообщение в чате будет первым в результирующем массиве.
         Поэтому, если вы используете параметры time_from и time_to, то time_to должно быть меньше, чем time_from
-        https://dev.tamtam.chat/#operation/getMessages
+        https://dev.max.ru/#operation/getMessages
         API = messages
         :param chat_id: идентификатор чата
         :param message_ids: разделенный запятыми список идентификаторов сообщений
@@ -538,7 +538,7 @@ class BotHandler:
     def get_members(self, chat_id, user_ids, marker=None, count=20):
         """
         Возвращает пользователей, участвовавших в чате. Returns users participated in chat.
-        https://dev.tamtam.chat/#operation/getMembers
+        https://dev.max.ru/#operation/getMembers
         API = chats/{chatId}/members
         :param chat_id: идентификатор чата
         :param user_ids: разделенный запятыми список идентификаторов пользователей для получения их членства, при
@@ -572,7 +572,7 @@ class BotHandler:
         """
         Добавляет пользователя в чат. Могут потребоваться дополнительные разрешения.
         Adds members to chat. Additional permissions may require.
-        https://dev.tamtam.chat/#operation/addMembers
+        https://dev.max.ru/#operation/addMembers
         API = chats/{chatId}/members
         :param chat_id: идентификатор чата
         :param user_ids: массив идентификаторов пользователей
@@ -603,7 +603,7 @@ class BotHandler:
         """
         Удаляет участника из чата. Могут потребоваться дополнительные разрешения.
         Removes member from chat. Additional permissions may require.
-        https://dev.tamtam.chat/#operation/removeMember
+        https://dev.max.ru/#operation/removeMember
         API = chats/{chatId}/members
         :param chat_id: идентификатор чата
         :param user_id: идентификатор пользователя
@@ -630,7 +630,7 @@ class BotHandler:
         """
         Блокирует и удаляет участника из чата. Могут потребоваться дополнительные разрешения.
         Blocks and removes member from chat. Additional permissions may require.
-        https://dev.tamtam.chat/#operation/removeMember
+        https://dev.max.ru/#operation/removeMember
         API = chats/{chatId}/members
         :param chat_id: идентификатор чата
         :param user_id: идентификатор пользователя
@@ -1163,7 +1163,7 @@ class BotHandler:
 
     def get_session_id(self, update):
         """
-        https://dev.tamtam.chat/#operation/getUpdates
+        https://dev.max.ru/#operation/getUpdates
         Метод получения значения session_id в режиме конструктора.
         :param update: результат работы метода get_updates
         :return: возвращает session_id для дальнейшей работы с данным сеансом конструктора.
@@ -1180,7 +1180,7 @@ class BotHandler:
 
     def get_message_id(self, update):
         """
-        https://dev.tamtam.chat/#operation/getUpdates
+        https://dev.max.ru/#operation/getUpdates
         Получение message_id отправленного или пересланного боту
         API = subscriptions/Get updates/[updates][0][message][link][message][mid] (type = 'forward')
            или = subscriptions/Get updates/[updates][0][message][body][mid]
@@ -1206,7 +1206,7 @@ class BotHandler:
 
     def get_start_payload(self, update):
         """
-        https://dev.tamtam.chat/#operation/getUpdates
+        https://dev.max.ru/#operation/getUpdates
         Получение начальной полезной нагрузки при открытии чата, созданого ботом в режиме конструтора
         :param update: результат работы метода get_updates()
         :return: возвращает, если это возможно, значение поля 'start_payload'
@@ -1240,7 +1240,7 @@ class BotHandler:
 
     def edit_message(self, message_id, text, attachments=None, link=None, notify=True, format=None):
         """
-        https://dev.tamtam.chat/#operation/editMessage
+        https://dev.max.ru/#operation/editMessage
         Метод  изменения (обновления) любого контента по его идентификатору
         :param message_id: Идентификатор редактируемого контента
         :param attachments: Новый массив объектов (файл, фото, видео, аудио, кнопки)
@@ -1283,7 +1283,7 @@ class BotHandler:
 
     def pin_message(self, chat_id, message_id, notify=True):
         """
-        https://dev.tamtam.chat/#operation/pinMessage
+        https://dev.max.ru/#operation/pinMessage
         Метод закрепления сообщений в чате
         :param chat_id: Идентификатор чата
         :param message_id: Идентификатор сообщения, которое будет закреплено
@@ -1310,7 +1310,7 @@ class BotHandler:
 
     def unpin_message(self, chat_id):
         """
-        https://dev.tamtam.chat/#operation/unpinMessage
+        https://dev.max.ru/#operation/unpinMessage
         Метод открепления сообщения в чате
         :param chat_id: Идентификатор чата
         """
@@ -1332,7 +1332,7 @@ class BotHandler:
 
     def get_pinned_message(self, chat_id):
         """
-        https://dev.tamtam.chat/#operation/getPinnedMessage
+        https://dev.max.ru/#operation/getPinnedMessage
         Метод получения закрепленного собщения в чате
         :param chat_id: Идентификатор чата
         :return message: Возвращает закрепленное сообщение, с ним можно работать привычными методами, например get_text(message)
@@ -1352,7 +1352,7 @@ class BotHandler:
     def typing_on(self, chat_id):
         """
         Отправка уведомления от бота в чат - 'печатает...'
-        https://dev.tamtam.chat/#operation/sendAction
+        https://dev.max.ru/#operation/sendAction
         :param chat_id: чат куда необходимо отправить уведомление
         :return:
         """
@@ -1366,7 +1366,7 @@ class BotHandler:
     def mark_seen(self, chat_id):
         """
         Отправка в чат маркера о прочтении ботом сообщения
-        https://dev.tamtam.chat/#operation/sendAction
+        https://dev.max.ru/#operation/sendAction
         :param chat_id: чат куда необходимо отправить уведомление
         :return:
         """
@@ -1380,7 +1380,7 @@ class BotHandler:
     def sending_video(self, chat_id):
         """
         Отправка уведомления от бота в чат - 'отправка видео...'
-        https://dev.tamtam.chat/#operation/sendAction
+        https://dev.max.ru/#operation/sendAction
         :param chat_id: чат куда необходимо отправить уведомление
         :return:
         """
@@ -1394,7 +1394,7 @@ class BotHandler:
     def sending_audio(self, chat_id):
         """
         Отправка уведомления от бота в чат - 'отправка аудио...'
-        https://dev.tamtam.chat/#operation/sendAction
+        https://dev.max.ru/#operation/sendAction
         :param chat_id: чат куда необходимо отправить уведомление
         :return:
         """
@@ -1408,7 +1408,7 @@ class BotHandler:
     def sending_photo(self, chat_id):
         """
         Отправка уведомления от бота в чат - 'отправка фото ...'
-        https://dev.tamtam.chat/#operation/sendAction
+        https://dev.max.ru/#operation/sendAction
         :param chat_id: чат куда необходимо отправить уведомление
         :return:
         """
@@ -1422,7 +1422,7 @@ class BotHandler:
     def sending_image(self, chat_id):
         """
         Отправка уведомления от бота в чат - 'отправка фото ...'
-        https://dev.tamtam.chat/#operation/sendAction
+        https://dev.max.ru/#operation/sendAction
         :param chat_id: чат куда необходимо отправить уведомление
         :return:
         """
@@ -1436,7 +1436,7 @@ class BotHandler:
     def sending_file(self, chat_id):
         """
         Отправка уведомления от бота в чат - 'отправка файла...' #не работает, но ошибку не вызывает
-        https://dev.tamtam.chat/#operation/sendAction
+        https://dev.max.ru/#operation/sendAction
         :param chat_id: чат куда необходимо отправить уведомление
         :return:
         """
@@ -1576,7 +1576,7 @@ class BotHandler:
 
     def upload_url(self, type):
         """
-        https://dev.tamtam.chat/#operation/getUploadUrl
+        https://dev.max.ru/#operation/getUploadUrl
         Вспомогательная функция получения URL для загрузки контента в ТамТам
         :param type: тип контента ('audio', 'video', 'file', 'photo')
         :return: URL на который будет отправляться контент
@@ -1611,7 +1611,7 @@ class BotHandler:
 
     def attach_file(self, content, content_name=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод подготовки файла (файлы загружаются только по одному) совместно с кнопками
         :param content: имя файла или полный путь доступный боту на машине где он запущен, например '/mnt/files/movie.mp4'
         :param content_name: имя с которым будет загружен файл
@@ -1624,7 +1624,7 @@ class BotHandler:
 
     def send_file(self, content, chat_id, text=None, content_name=None, format=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод отправки файла в указанный чат (файлы загружаются только по одному)
         :param content: имя файла или полный путь доступный боту на машине где он запущен, например 'movie.mp4'
         :param chat_id: чат куда будет загружен файл
@@ -1640,7 +1640,7 @@ class BotHandler:
 
     def attach_image(self, content):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод подготовки изображений (нескольких изображений) в указанный чат
         :param content: имя файла или список имен файлов с изображениями
         :return: attach: подготовленный контент
@@ -1658,7 +1658,7 @@ class BotHandler:
 
     def send_image(self, content, chat_id, text=None, format=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод отправки фoто (нескольких фото) в указанный чат
         :param content: имя файла или список имен файлов с изображениями
         :param chat_id: чат куда будут загружены изображения
@@ -1673,7 +1673,7 @@ class BotHandler:
 
     def attach_image_url(self, url):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод подготовки изображений (нескольких изображений) к отправке по их url
         :param url: http адрес или список адресов с изображениями
         :return: attach: подготовленный контент
@@ -1689,7 +1689,7 @@ class BotHandler:
 
     def send_image_url(self, url, chat_id, text=None, format=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод отправки фото (нескольких фото) в указанный чат по url
         :param url: http адрес или список адресов с изображениями
         :param chat_id: чат куда будут загружены изображения
@@ -1704,7 +1704,7 @@ class BotHandler:
 
     def attach_video(self, content):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод подготовки к отправке видео (нескольких видео)
         :param content: имя файла или полный путь доступный боту на машине где он запущен, например 'movie.mp4'
                         иди список файлов ['movie.mp4', 'movie2.mkv']
@@ -1723,7 +1723,7 @@ class BotHandler:
 
     def send_video(self, content, chat_id, text=None, format=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод отправки видео (нескольких видео) в указанный чат
         :param content: имя файла или полный путь доступный боту на машине где он запущен, например 'movie.mp4'
                         иди список файлов ['movie.mp4', 'movie2.mkv']
@@ -1739,7 +1739,7 @@ class BotHandler:
 
     def attach_audio(self, content):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод подготовки аудио (только по одному) к отправке
         :param content: имя файла или полный путь доступный боту на машине где он запущен (например 'audio.mp3'),
                         файлы защищенные авторскими правами не загружаются
@@ -1751,7 +1751,7 @@ class BotHandler:
 
     def send_audio(self, content, chat_id, text=None, format=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод отправки аудио (только по одному) в указанный чат
         :param content: имя файла или полный путь доступный боту на машине где он запущен (например 'audio.mp3'),
                         файлы защищенные авторскими правами не загружаются
@@ -1767,7 +1767,7 @@ class BotHandler:
 
     def send_forward_message(self, text, mid, chat_id, user_id=None, format=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Send forward message specific chat_id by post request
         Пересылает сообщение в указанный чат
         :param text: текст к пересылаемому сообщению или None
@@ -1784,7 +1784,7 @@ class BotHandler:
 
     def link_reply(self, mid):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Формирует параметр link на цитируемуе сообщение для отправки через send_message
         :param mid: идентификатор сообщения (get_message_id) на которое готовим link
         :return link: сформированный параметр link
@@ -1796,7 +1796,7 @@ class BotHandler:
 
     def link_forward(self, mid):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Формирует параметр link на пересылаемое сообщение для отправки через send_message
         :param mid: идентификатор сообщения (get_message_id) на которое готовим link
         :return link: сформированный параметр link
@@ -1808,7 +1808,7 @@ class BotHandler:
 
     def send_reply_message(self, text, mid, chat_id, dislinkprev=None, format=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Send reply message specific chat_id by post request
         Формирует ответ на сообщение в указанный чат
         :param text: текст ответа на сообщение (обязательный параметр)
@@ -1825,7 +1825,7 @@ class BotHandler:
 
     def token_upload_content(self, type, content, content_name=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Вспомогательная функция получения Tokena для загрузки контента в ТамТам
         :param type: тип контента ('audio', 'video', 'file', 'photo')
         :param content: имя файла или полный путь доступный боту на машине где он запущен (например 'movie.mp4')
@@ -1850,7 +1850,7 @@ class BotHandler:
 
     def send_message(self, text, chat_id, user_id=None, attachments=None, link=None, notify=True, dislinkprev=False, format=None):
         """
-        https://dev.tamtam.chat/#operation/sendMessage
+        https://dev.max.ru/#operation/sendMessage
         Метод отправки любого контента, сформированного в соответсвии с документацией, в указанный чат
         :param attachments: Массив объектов (файл, фото, видео, аудио, кнопки и т.д.)
         :param chat_id: Чат куда отправляется контент
@@ -1899,7 +1899,7 @@ class BotHandler:
 
     def send_answer_callback(self, callback_id, notification, text=None, attachments=None, link=None, notify=True, format=None):
         """
-        https://dev.tamtam.chat/#operation/answerOnCallback
+        https://dev.max.ru/#operation/answerOnCallback
         Метод отправки ответа после того, как пользователь нажал кнопку. Ответом может
         быть обновленное сообщение или/и кратковременное всплывающее уведомление пользователя.
         :param callback_id: параметр, соответствующий нажатой кнопке
@@ -1951,7 +1951,7 @@ class BotHandler:
     def send_construct_message(self, session_id, hint, text=None, attachments=None, markup=None, format=None,
                                allow_user_input=True, data=None, buttons=None, placeholder=None):
         """
-        https://dev.tamtam.chat/#operation/construct
+        https://dev.max.ru/#operation/construct
         Метод отправки ответа после того, как пользователь нажал кнопку. Ответом может
         быть обновленное сообщение или/и кратковременное всплывающее уведомление пользователя.
         :param session_id: параметр, соответствующий вызванному конструктору

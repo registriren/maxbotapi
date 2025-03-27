@@ -1,7 +1,7 @@
-from botapitamtam import BotHandler
+from maxbotapi import BotHandler
 import time
 
-token = 'vIdhiW6OX2qYfcwoKaatxqiEDdjeqRgxgj56v-8I9ws'  # токен, полученный при создании бота в @PrimeBot
+token = 'access_token_masterbot'  # токен, полученный при создании бота в @MasterBot
 
 bot = BotHandler(token)
 

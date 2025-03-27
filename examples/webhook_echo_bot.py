@@ -2,21 +2,21 @@
 # -*- coding: utf-8 -*-
 
 
-# для подписки на webhook через @primebot и команду /set_webhook
+# для подписки на webhook через @masterbot и команду /set_webhook
 # задать адрес и порт (см. конец кода) сервера где размещен бот
 # например: http://123.123.123.123:33333 или http://myserver.com:17235
 # допустимые порты 80, 8080, 443, 8443, 16384-32383
 # это простой, но не безопасный способ, представлен для понимания работы
 
-from botapitamtam import BotHandler
+from maxbotapi import BotHandler
 import json
 import logging
 from flask import Flask, request, jsonify  # для webhook
 
 config = 'config.json' # файл, содержащий токен доступа к боту в формате json, размещается в каталоге с ботом
-# токен получаем через @primebot, формат файла config.json :
+# токен получаем через @masterbot, формат файла config.json :
 # {
-# "access_token": "vIhiiW6OX2qYfbwoKyatxqiXDdjeqRgxgj56v-8Ixxx"
+# "access_token": "vIhiiW6OX2qYxxxxxxatxqiXDdjeqRgxgj56v-8Ixxx"
 # }
 with open(config, 'r', encoding='utf-8') as c:
     conf = json.load(c)

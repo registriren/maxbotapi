@@ -1,9 +1,9 @@
 # этот пример показывает как можно сформировать и изменить совокупный контент
 
-from botapitamtam import BotHandler
+from maxbotapi import BotHandler
 import time
 
-token = 'access_token_primebot' # токен, полученный при создании бота в @PrimeBot
+token = 'access_token_masterbot'  # токен, полученный при создании бота в @MasterBot
 
 bot = BotHandler(token)
 

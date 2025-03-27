@@ -1,12 +1,12 @@
 # Это пример действующего бота для управления ботами, работающими на том же сервере. Бот позволяет получать лог, останавливать, запускать, обновлять (git pull) и перезапускать боты на сервере при помощи соответствующих скриптов bash, размещенных в каталогах управляемых ботов.
 # Особенностью этой реализации является изменяемое меню, которое всегда остается внизу окна клиента независимо от действий пользователя.
 
-from botapitamtam import BotHandler
+from maxbotapi import BotHandler
 import json
 from subprocess import call
 import os
 
-token = 'access_token_primebot'  # токен, полученный при создании бота в @PrimeBot
+token = 'access_token_masterbot'  # токен, полученный при создании бота в @MasterBot
 
 bot = BotHandler(token)
 
