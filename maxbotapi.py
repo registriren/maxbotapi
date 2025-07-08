@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class BotHandler:
     """
-    обработчик комманд
+    обработчик команд
     """
 
     def __init__(self, token):
@@ -359,7 +359,7 @@ class BotHandler:
         Returns information about chats that bot participated in: a result list and marker points to the next page
         https://dev.max.ru/#operation/getChats
         API = chats
-        :param count: количествово анализируемых чатов (максмум 100).
+        :param count: количество анализируемых чатов (максимум 100).
         :param marker: указывает на следующую страницу данных, null для первой страницы
         :return: chats: возвращает результат GET запроса.
         """
@@ -467,7 +467,7 @@ class BotHandler:
         :param icon_url: ссылка на изображение (имеет приоритет перед файлом значка)
         :param title: заголовок
         :param pin: указать message_id закрепляемого сообщения
-        :param notify: уведомление об измененииях в информации чата
+        :param notify: уведомление об изменениях в информации чата
         :return: возвращает информацию о параметрах измененного чата
         """
         method = 'chats/{}'.format(chat_id)
@@ -716,7 +716,7 @@ class BotHandler:
                         try:
                             text = upd['pinned_message']['link']['message']['text']
                         except Exception as e:
-                            logger.debug('get_text pinned_messsage link none: %s', e)
+                            logger.debug('get_text pinned_message link none: %s', e)
                             text = None
         return text
 
@@ -1207,7 +1207,7 @@ class BotHandler:
     def get_start_payload(self, update):
         """
         https://dev.max.ru/#operation/getUpdates
-        Получение начальной полезной нагрузки при открытии чата, созданого ботом в режиме конструтора
+        Получение начальной полезной нагрузки при открытии чата, созданного ботом в режиме конструктора
         :param update: результат работы метода get_updates()
         :return: возвращает, если это возможно, значение поля 'start_payload'
         """
@@ -1333,7 +1333,7 @@ class BotHandler:
     def get_pinned_message(self, chat_id):
         """
         https://dev.max.ru/#operation/getPinnedMessage
-        Метод получения закрепленного собщения в чате
+        Метод получения закрепленного сообщения в чате
         :param chat_id: Идентификатор чата
         :return message: Возвращает закрепленное сообщение, с ним можно работать привычными методами, например get_text(message)
         """
@@ -1419,19 +1419,6 @@ class BotHandler:
         except Exception as e:
             logger.error("Error sending_photo: %s.", e)
 
-    def sending_image(self, chat_id):
-        """
-        Отправка уведомления от бота в чат - 'отправка фото ...'
-        https://dev.max.ru/#operation/sendAction
-        :param chat_id: чат куда необходимо отправить уведомление
-        :return:
-        """
-        method_ntf = 'chats/{}'.format(chat_id) + '/actions?access_token='
-        params = {"action": "sending_image"}
-        try:
-            requests.post(self.url + method_ntf + self.token, data=json.dumps(params))
-        except Exception as e:
-            logger.error("Error sending_image: %s.", e)
 
     def sending_file(self, chat_id):
         """
@@ -1485,7 +1472,7 @@ class BotHandler:
                            "payload": {"buttons": [buttons]}
                            }
                           ]
-                logger.info('atach_button is list, except (%s)', e)
+                logger.info('attach_button is list, except (%s)', e)
         else:
             attach = [{"type": "inline_keyboard",
                        "payload": {"buttons": [[buttons]]}
@@ -1659,7 +1646,7 @@ class BotHandler:
     def send_image(self, content, chat_id, text=None, format=None):
         """
         https://dev.max.ru/#operation/sendMessage
-        Метод отправки фoто (нескольких фото) в указанный чат
+        Метод отправки фото (нескольких фото) в указанный чат
         :param content: имя файла или список имен файлов с изображениями
         :param chat_id: чат куда будут загружены изображения
         :param text: Сопровождающий текст к отправляемому контенту
@@ -1785,7 +1772,7 @@ class BotHandler:
     def link_reply(self, mid):
         """
         https://dev.max.ru/#operation/sendMessage
-        Формирует параметр link на цитируемуе сообщение для отправки через send_message
+        Формирует параметр link на цитируемое сообщение для отправки через send_message
         :param mid: идентификатор сообщения (get_message_id) на которое готовим link
         :return link: сформированный параметр link
         """
@@ -1826,7 +1813,7 @@ class BotHandler:
     def token_upload_content(self, type, content, content_name=None):
         """
         https://dev.max.ru/#operation/sendMessage
-        Вспомогательная функция получения Tokena для загрузки контента в ТамТам
+        Вспомогательная функция получения токена для загрузки контента в Макс
         :param type: тип контента ('audio', 'video', 'file', 'photo')
         :param content: имя файла или полный путь доступный боту на машине где он запущен (например 'movie.mp4')
         :param content_name: Имя с которым будет загружен файл
@@ -1851,7 +1838,7 @@ class BotHandler:
     def send_message(self, text, chat_id, user_id=None, attachments=None, link=None, notify=True, dislinkprev=False, format=None):
         """
         https://dev.max.ru/#operation/sendMessage
-        Метод отправки любого контента, сформированного в соответсвии с документацией, в указанный чат
+        Метод отправки любого контента, сформированного в соответствии с документацией, в указанный чат
         :param attachments: Массив объектов (файл, фото, видео, аудио, кнопки и т.д.)
         :param chat_id: Чат куда отправляется контент
         :param user_id: Идентификатор пользователя, которому отправляем сообщение
