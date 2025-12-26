@@ -1,10 +1,9 @@
-# Version 0.1
+# Version 0.2
 
 import json
 import logging
 import os
 import time
-
 import requests
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -18,14 +17,14 @@ class BotHandler:
 
     def __init__(self, token):
         self.token = token
-        self.url = 'https://botapi.max.ru/'
+        self.url = 'https://platform-api.max.ru/'
         self.marker = None
 
     def get_updates(self, limit=1, timeout=45):
         """
         Основная функция опроса состояния (событий) бота методом long polling
         This method is used to get updates from bot via get request. It is based on long polling.
-        https://dev.max.ru/#operation/getUpdates
+        https://dev.max.ru/docs-api/methods/GET/updates
         API = subscriptions/Get updates/
         """
         update = {}
@@ -1564,7 +1563,7 @@ class BotHandler:
     def upload_url(self, type):
         """
         https://dev.max.ru/#operation/getUploadUrl
-        Вспомогательная функция получения URL для загрузки контента в ТамТам
+        Вспомогательная функция получения URL для загрузки контента в MAX
         :param type: тип контента ('audio', 'video', 'file', 'photo')
         :return: URL на который будет отправляться контент
         """
