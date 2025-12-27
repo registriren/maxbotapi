@@ -12,12 +12,12 @@ logger = logging.getLogger(__name__)
 
 class BotHandler:
     """
-    обработчик команд
+    Обработчик команд
     """
 
     def __init__(self, token):
         self.token = token
-        self.url = 'https://platform-api.max.ru/'
+        self.url = 'https://botapi.max.ru/'
         self.marker = None
 
     def get_updates(self, limit=1, timeout=45):
@@ -902,7 +902,6 @@ class BotHandler:
         return chat_id
 
 
-
     def get_user_id(self, update):
         """
         Получения идентификатора пользователя, инициировавшего событие
@@ -1202,6 +1201,39 @@ class BotHandler:
             elif 'message_id' in upd.keys():  # type == 'message_chat_created' or type == 'message_removed':
                 mid = upd['message_id']
         return mid
+
+    def get_videos(self, update):
+        token = None
+        list_videos = None
+        if update:
+            if 'updates' in update.keys():
+                upd = update['updates'][0]
+            else:
+                upd = update
+            token = None
+            attach = self.get_attachments(upd)
+            if attach:
+                attach = attach[0]
+                if 'payload' in attach.keys():
+                    attach = attach.get('payload')
+                    if 'token' in attach.keys():
+                        token = attach.get('token')
+        if token:
+            method = 'videos/{}'.format(token)
+            params = {
+            "access_token": self.token
+            }
+            try:
+                response = requests.get(self.url + method, params)
+                if response.status_code == 200:
+                    list_videos = response.json()
+                else:
+                    logger.error("Error get videos by token Response info: {}".format(response.status_code))
+                    list_videos = None
+            except Exception as e:
+                logger.error("Error connect get videos by token info: %s.", e)
+                list_videos = None
+        return list_videos
 
     def get_start_payload(self, update):
         """
@@ -1525,6 +1557,16 @@ class BotHandler:
         button = {"type": 'request_geo_location',
                   "text": text,
                   "quick": quick}
+        return button
+
+    def button_message(self, text):
+        """
+        Подготавливает кнопку для отправки текста в чат
+        :param text: подпись кнопки и текст сообщения
+        :return: возвращает подготовленную кнопку для последующего формирования массива
+        """
+        button = {"type": 'message',
+                  "text": text}
         return button
 
     def button_chat(self, text, chat_title, chat_description=None, start_payload=None, uuid=None):
