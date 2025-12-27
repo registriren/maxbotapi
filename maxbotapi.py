@@ -1569,6 +1569,23 @@ class BotHandler:
                   "text": text}
         return button
 
+    def button_app(self, text, web_app, contact_id=None, payload=None):
+        """
+        Подготавливает кнопку создания чата в режиме конструктора
+        :param text: от 1 до 128 символов. Видимый текст кнопки
+        :param web_app: Публичное имя (username) бота или ссылка на него, чьё мини-приложение надо запустить
+        :param contact_id: Идентификатор бота, чьё мини-приложение надо запустить
+        :param payload: Параметр запуска, который будет передан в initData мини-приложения
+        :return: возвращает подготовленную кнопку для последующего формирования массива
+        """
+        button = {"type": 'chat',
+                  "text": text,
+                  "web_app": web_app,
+                  "contact_id": contact_id,
+                  "payload": payload
+                   }
+        return button
+
     def button_chat(self, text, chat_title, chat_description=None, start_payload=None, uuid=None):
         """
         Подготавливает кнопку создания чата в режиме конструктора
