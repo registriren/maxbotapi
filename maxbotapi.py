@@ -1,4 +1,4 @@
-# Version 0.2
+# Version 0.2.1
 
 import json
 import logging
@@ -17,7 +17,7 @@ class BotHandler:
 
     def __init__(self, token):
         self.token = token
-        self.url = 'https://botapi.max.ru/'
+        self.url = 'https://platform-api.max.ru/'
         self.marker = None
 
     def get_updates(self, limit=1, timeout=45):
@@ -1621,12 +1621,13 @@ class BotHandler:
 
     def upload_url(self, type):
         """
-        https://dev.max.ru/#operation/getUploadUrl
+        https://dev.max.ru/docs-api/methods/POST/uploads
         Вспомогательная функция получения URL для загрузки контента в MAX
-        :param type: тип контента ('audio', 'video', 'file', 'photo')
-        :return: URL на который будет отправляться контент
+        :param type: тип контента ('audio', 'video', 'file', 'image')
+        :return: URL на который будет отправляться контент и токен для загрузки контента типа видео и аудио (файл и изображение получают токен в ответе на загрузку)
         """
         url = None
+        token = None
         method = 'uploads'
         params = (
             ('access_token', self.token),
@@ -1637,9 +1638,12 @@ class BotHandler:
             if response.status_code == 200:
                 update = response.json()
                 url = update.get('url')
+                if type == 'video' or type == 'audio':
+                    token = update
+                    logger.info('Content type video or audio detect')
         except Exception as e:
             logger.error("Error upload_url: %s.", e)
-        return url
+        return url, token
 
     def markup(self, type, from_posit, length):
         """
@@ -1877,8 +1881,7 @@ class BotHandler:
         :param content_name: Имя с которым будет загружен файл
         :return: update: результат работы POST запроса отправки файла
         """
-        token = None
-        url = self.upload_url(type)
+        url, token = self.upload_url(type)
         if content_name is None:
             content_name = os.path.basename(content)
         try:
@@ -1887,7 +1890,7 @@ class BotHandler:
             logger.error("Error upload file (no such file): %s", e)
         try:
             response = requests.post(url, files={'files': (content_name, content, 'multipart/form-data')})
-            if response.status_code == 200:
+            if response.status_code == 200 and not token:
                 token = response.json()
         except Exception as e:
             logger.error("Error token_upload_content: %s.", e)
