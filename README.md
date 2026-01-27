@@ -10,7 +10,7 @@
 
 <https://max.ru/userinfobot>
 
-Чат для обсуждения вопросов, связанных с работой библиотеки [maxbotapi chat](https://max.ru/join/283-Rhj1NENnxm7ESgg7mHhFLRKL3DbJSrJ1SW8GfHg)
+Чат для обсуждения вопросов, связанных с работой библиотеки [maxbotapy chat](https://max.ru/join/283-Rhj1NENnxm7ESgg7mHhFLRKL3DbJSrJ1SW8GfHg)
 
 Чат для взаимопомощи и обсуждения работы мессенджера MAX [MAX help chat](https://max.ru/join/JVlCAieBLbiEOWkQNASznw0phL7lqXOp3cNp1BfOwuw)  
 
@@ -25,7 +25,7 @@
 7. Предлагаемая конструкция кода:
 
 ```python
-from maxbotapi import BotHandler
+from maxbotapy import BotHandler
 
 bot = BotHandler('access_token_masterbot')
 
@@ -46,8 +46,8 @@ if __name__ == '__main__':
   except KeyboardInterrupt:
     exit()
 ```
-8. Для работы с библиотекой поместите файл [maxbotapi.py](maxbotapi.py) в каталог с вашим кодом. Для удобного использования библиотеки во многих ботах с возможностью получения обновлений необходимо клонировать репозиторий в отдельный каталог
-(`git clone https://github.com/registriren/maxbotapi`), а символьную ссылку на файл [maxbotapi.py](maxbotapi.py) разместить в каталогах с вашими ботами.
+8. Для работы с библиотекой поместите файл [maxbotapy.py](maxbotapy.py) в каталог с вашим кодом. Для удобного использования библиотеки во многих ботах с возможностью получения обновлений необходимо клонировать репозиторий в отдельный каталог
+(`git clone https://github.com/registriren/maxbotapy`), а символьную ссылку на файл [maxbotapy.py](maxbotapy.py) разместить в каталогах с вашими ботами.
 9. Отправка простого однотипного контента (текст и фото, текст и видео, текст и кнопки) в чат осуществляется с помощью методов `send_image, send_video, send_buttons`.
 10. Формирование кнопок осуществляется в несколько этапов:
   - Готовим кнопки в зависимости от типа (`callback, link, request_contact, request_geo_location, chat`) с помощью соответствующих методов `button_callback, button_link, button_contact и т.п.` результат работы методов присваем переменной, например `key1 = button_callback('Кнопка1', 'payload-key1')`
